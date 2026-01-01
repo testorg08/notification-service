@@ -1,0 +1,41 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: notification-service
+  title: Notification Service
+  description: Email, SMS, and in-app notification service for Conga Platform
+  annotations:
+    github.com/project-slug: testorg08/notification-service
+    argocd/app-selector: app.kubernetes.io/name=notification-service
+    backstage.io/techdocs-ref: dir:.
+    conga.io/site-group: CSG1
+    conga.io/sync-wave: "2"
+    conga.io/database-dependencies: notification_database
+    conga.io/infrastructure-requirements: postgresql,rabbitmq,s3
+  tags:
+    - notifications
+    - messaging
+    - email
+    - sms
+    - platform
+    - csg1
+  links:
+    - url: https://notifications-dev.conga.com
+      title: Development Environment
+      icon: web
+    - url: https://notifications-staging.conga.com
+      title: Staging Environment
+      icon: web
+    - url: https://notifications.conga.com
+      title: Production Environment
+      icon: web
+spec:
+  type: service
+  lifecycle: production
+  owner: platform-team
+  system: conga-platform-core
+  providesApis:
+    - notification-api
+  dependsOn:
+    - component:auth-service
+    - component:user-service
